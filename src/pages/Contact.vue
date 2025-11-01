@@ -75,11 +75,11 @@
 
       <aside class="space-y-6 text-sm text-slate-600">
         <div class="rounded-3xl bg-white p-8 shadow-subtle">
-          <h2 class="text-lg font-semibold text-slate-900">Clinic Details</h2>
+          <h2 class="text-lg font-semibold text-slate-900">Doctor Details</h2>
           <ul class="mt-5 space-y-4">
             <li>
               <p class="text-xs font-semibold uppercase tracking-[0.3em] text-primary">Address</p>
-              <p class="mt-1">Istinye Medical Center, Büyükdere Cd. No:21, Sarıyer / İstanbul</p>
+              <p class="mt-1"> İstanbul</p>
             </li>
             <li>
               <p class="text-xs font-semibold uppercase tracking-[0.3em] text-primary">Phone</p>
@@ -87,7 +87,7 @@
             </li>
             <li>
               <p class="text-xs font-semibold uppercase tracking-[0.3em] text-primary">Email</p>
-              <a href="mailto:hello@dremirkaya.com" class="mt-1 block text-primary hover:text-primary-dark">hello@dremirkaya.com</a>
+              <a href="mailto:cengizcabukoglu@gmail.com" class="mt-1 block text-primary hover:text-primary-dark">cengizcabukoglu@gmail.com</a>
             </li>
           </ul>
         </div>
