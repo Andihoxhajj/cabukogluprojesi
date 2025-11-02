@@ -16,12 +16,6 @@
           </p>
           <div class="flex flex-wrap items-center gap-4">
             <RouterLink
-              to="/contact"
-              class="rounded-full bg-primary px-6 py-3 text-base font-semibold text-white shadow-subtle transition hover:-translate-y-0.5 hover:bg-primary-dark"
-            >
-              Book Appointment
-            </RouterLink>
-            <RouterLink
               to="/project"
               class="inline-flex items-center gap-2 text-sm font-semibold text-primary transition hover:text-primary-dark"
             >
@@ -152,18 +146,12 @@
           diagnostic findings and lifestyle goals.
         </p>
         <div class="mt-6 flex flex-wrap justify-center gap-4">
-          <RouterLink
-            to="/contact"
-            class="rounded-full bg-white/90 px-6 py-3 text-sm font-semibold text-primary transition hover:bg-white"
-          >
-            Book a consultation
-          </RouterLink>
-          <!-- <a
+          <a
             href="tel:+902122223344"
-            class="inline-flex items-center gap-2 rounded-full border border-white/60 px-6 py-3 text-sm font-semibold transition hover:-translate-y-0.5"
+            class="inline-flex items-center gap-2 rounded-full border border-white/60 bg-white/90 px-6 py-3 text-sm font-semibold text-primary transition hover:-translate-y-0.5 hover:bg-white"
           >
             Call the clinic
-          </a> -->
+          </a>
         </div>
       </div>
     </section>

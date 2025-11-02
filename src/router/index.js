@@ -34,14 +34,6 @@ const routes = [
     },
   },
   {
-    path: '/contact',
-    name: 'contact',
-    component: () => import('@/pages/Contact.vue'),
-    meta: {
-      title: 'Book an Appointment',
-    },
-  },
-  {
     path: '/:pathMatch(.*)*',
     redirect: '/',
   },

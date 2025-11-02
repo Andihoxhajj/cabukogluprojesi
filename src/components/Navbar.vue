@@ -64,12 +64,6 @@
             class="absolute -bottom-2 left-0 h-[2px] w-full bg-primary"
           />
         </RouterLink>
-        <RouterLink
-          to="/contact"
-          class="rounded-full bg-primary px-5 py-2 text-white shadow-subtle transition-transform duration-200 hover:-translate-y-0.5 hover:bg-primary-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-        >
-          Book Appointment
-        </RouterLink>
       </div>
     </nav>
 
@@ -86,13 +80,6 @@
           >
             {{ link.label }}
           </RouterLink>
-          <RouterLink
-            to="/contact"
-            class="block rounded-lg bg-primary px-4 py-3 text-center text-sm font-semibold text-white shadow-subtle transition hover:bg-primary-dark"
-            @click="closeMenu"
-          >
-            Book Appointment
-          </RouterLink>
         </div>
       </div>
     </transition>
@@ -107,7 +94,6 @@ const navigation = [
   { label: 'Home', to: '/' },
   { label: 'About', to: '/about' },
   { label: 'Project', to: '/project' },
-  { label: 'Contact', to: '/contact' },
 ];
 
 const isMenuOpen = ref(false);
