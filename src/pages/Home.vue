@@ -84,7 +84,30 @@
       </div>
     </section>
 
-    
+    <!-- Moved from About: History & Family Legacy -->
+    <section class="space-y-6 rounded-3xl bg-white p-8 shadow-subtle section-container">
+      <h2 class="text-2xl font-semibold text-slate-900">History & Family Legacy</h2>
+      <p class="text-base leading-relaxed text-slate-600">
+        The project traces its origins to the Çabukoğlu family. Op. Dr. Cengiz Çabukoğlu is the only son of Beşir
+        Çabukoğlu (July 21, 1935 – February 23, 2025), a member of the prominent Çabuk lineage in Mardin. His
+        commitment to medicine was shaped by his mother, Cahide Çabukoğlu (December 26, 1946 – May 21, 2025), whose
+        heart condition inspired him to pursue healing rather than a military career.
+      </p>
+      <p class="text-base leading-relaxed text-slate-600">
+        The family legacy also owes much to his sister Deniz Çabukoğlu (January 5, 1967 – April 11, 2024), whose
+        resilience and belief that every challenge has a solution guided his surgical journey. Today, Op. Dr.
+        Çabukoğlu performs procedures mastered by only a few specialists worldwide.
+      </p>
+      <blockquote class="rounded-3xl border border-primary/20 bg-primary/5 p-6 text-sm italic text-primary-dark">
+        “Carry on our name, raise our lineage, spread your healing, share your knowledge.” – Beşir Çabukoğlu
+      </blockquote>
+      <p class="text-base leading-relaxed text-slate-600">
+        Honoring the wishes of his elders, Op. Dr. Çabukoğlu established this project to continue delivering
+        world-class orthopedic care under the Çabukoğlu name. The initiative stands as a tribute to the memory of
+        his parents and sister, and it also acknowledges the enduring support of family members Filiz Çabukoğlu and
+        Zekiye Nergiz Çabukoğlu Birlik.
+      </p>
+    </section>
 
     <section class="section-container grid gap-12 lg:grid-cols-[1.2fr,1fr] lg:items-center">
       <div class="space-y-5">

@@ -26,6 +26,14 @@ const routes = [
     },
   },
   {
+    path: '/project-pacients',
+    name: 'project-pacients',
+    component: () => import('@/pages/ProjectPacients.vue'),
+    meta: {
+      title: 'Project Pacients',
+    },
+  },
+  {
     path: '/project/:id',
     name: 'project-detail',
     component: () => import('@/pages/ProjectDetail.vue'),

@@ -16,15 +16,28 @@
       <div class="flex-1">
         <div>
           <h3 class="text-sm font-semibold uppercase tracking-[0.3em] text-primary/70">Professional Details</h3>
-          <ul class="mt-4 space-y-3 text-sm text-slate-300">
-            <li><span class="font-semibold text-slate-100">Date of Birth:</span> 27 April 1969</li>
-            <li><span class="font-semibold text-slate-100">Place of Birth:</span> Hınıs</li>
-            <li>
-              <span class="font-semibold text-slate-100">Address:</span>
-              Tepeören Neighborhood, Formula 1 Road, Kuğu Evleri Residences, Akfırat Tuzla / Istanbul
+          <ul class="mt-4 grid gap-3 text-sm text-slate-300 sm:grid-cols-2 lg:grid-cols-3">
+            <li class="rounded-2xl bg-slate-800/50 p-3">
+              <p class="text-xs uppercase tracking-widest text-primary/60">Turkey</p>
+              <p class="mt-1 text-slate-100">License No: 123456</p>
+            </li>
+            <li class="rounded-2xl bg-slate-800/50 p-3">
+              <p class="text-xs uppercase tracking-widest text-primary/60">Azerbaijan</p>
+              <p class="mt-1 text-slate-100">License No: 789012</p>
+            </li>
+            <li class="rounded-2xl bg-slate-800/50 p-3">
+              <p class="text-xs uppercase tracking-widest text-primary/60">Kosovo</p>
+              <p class="mt-1 text-slate-100">License No: 345678</p>
+            </li>
+            <li class="rounded-2xl bg-slate-800/50 p-3">
+              <p class="text-xs uppercase tracking-widest text-primary/60">Georgia</p>
+              <p class="mt-1 text-slate-100">License No: 901234</p>
+            </li>
+            <li class="rounded-2xl bg-slate-800/50 p-3">
+              <p class="text-xs uppercase tracking-widest text-primary/60">Bulgaria</p>
+              <p class="mt-1 text-slate-100">License No: 567890</p>
             </li>
           </ul>
-        
         </div>
       </div>
     </div>

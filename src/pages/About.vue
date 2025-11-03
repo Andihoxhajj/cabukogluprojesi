@@ -89,16 +89,7 @@
           <li v-for="item in memberships" :key="item">• {{ item }}</li>
         </ul>
       </div>
-      <div class="rounded-3xl bg-white p-6 shadow-subtle">
-        <h3 class="text-lg font-semibold text-slate-900">Languages</h3>
-        <ul class="mt-4 space-y-2 text-sm text-slate-600">
-          <li v-for="item in languages" :key="item">• {{ item }}</li>
-        </ul>
-        <h3 class="mt-6 text-lg font-semibold text-slate-900">References</h3>
-        <ul class="mt-4 space-y-2 text-sm text-slate-600">
-          <li v-for="item in references" :key="item">• {{ item }}</li>
-        </ul>
-      </div>
+      
       <div class="rounded-3xl bg-white p-6 shadow-subtle">
         <h3 class="text-lg font-semibold text-slate-900">Thesis Topic</h3>
         <p class="mt-3 text-sm leading-relaxed text-slate-600">

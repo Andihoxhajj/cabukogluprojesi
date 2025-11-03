@@ -92,8 +92,9 @@ import { useRoute } from 'vue-router';
 
 const navigation = [
   { label: 'Home', to: '/' },
-  { label: 'About', to: '/about' },
   { label: 'Project', to: '/project' },
+  { label: 'About', to: '/about' },
+  { label: 'Project Pacients', to: '/project-pacients' },
 ];
 
 const isMenuOpen = ref(false);
