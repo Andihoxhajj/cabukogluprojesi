@@ -2,7 +2,7 @@
   <div class="section-container space-y-16">
     <header class="grid gap-10 lg:grid-cols-[1fr,1.2fr] lg:items-center">
       <div class="relative overflow-hidden rounded-[40px] border border-primary/20 bg-white shadow-subtle">
-        <img :src="doctorPortrait" alt="Op. Dr. Cengiz Çabukoğlu" class="w-full object-cover" />
+        <img :src="aboutImage" alt="Op. Dr. Cengiz Çabukoğlu" class="w-full object-cover" />
       </div>
       <div class="space-y-6">
         <p class="text-sm font-semibold uppercase tracking-[0.4em] text-primary">About</p>
@@ -207,6 +207,6 @@ import {
   conferenceNational,
   books,
 } from '@/data/profile.js';
-import doctorPortrait from '@/data/doctorImage.js';
+import aboutImage from '@/assets/images/12.png';
 </script>
 
