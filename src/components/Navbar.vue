@@ -4,15 +4,11 @@
   >
     <nav class="mx-auto flex max-w-6xl items-center justify-between px-4 py-5 sm:px-6">
       <RouterLink to="/" class="flex items-center gap-3" @click="closeMenu">
-        <span
-          class="flex h-10 w-10 items-center justify-center rounded-full bg-primary/15 text-primary"
-        >
-          <svg viewBox="0 0 24 24" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.8">
-            <path d="M12 3v18" stroke-linecap="round" />
-            <path d="M5 9h14" stroke-linecap="round" />
-            <path d="M7 15h10" stroke-linecap="round" />
-          </svg>
-        </span>
+        <img
+          :src="logo"
+          alt="Logo"
+          class="h-14 w-14 object-contain"
+        />
         <div class="leading-tight">
           <p class="text-sm font-semibold uppercase tracking-[0.3em] text-primary">Orthopedics</p>
           <p class="text-lg font-semibold text-slate-900">Op. Dr. Cengiz Çabukoğlu</p>
@@ -89,6 +85,7 @@
 <script setup>
 import { computed, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
+import logo from '@/assets/images/logoo.svg';
 
 const navigation = [
   { label: 'Home', to: '/' },

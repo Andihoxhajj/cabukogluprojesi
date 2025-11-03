@@ -169,23 +169,90 @@
           diagnostic findings and lifestyle goals.
         </p>
         <div class="mt-6 flex flex-wrap justify-center gap-4">
-          <a
-            href="tel:+902122223344"
+          <button
+            @click="showPhoneModal = true"
             class="inline-flex items-center gap-2 rounded-full border border-white/60 bg-white/90 px-6 py-3 text-sm font-semibold text-primary transition hover:-translate-y-0.5 hover:bg-white"
           >
             Call the clinic
-          </a>
+          </button>
         </div>
       </div>
     </section>
+
+    <!-- Phone Number Modal -->
+    <transition name="fade">
+      <div
+        v-if="showPhoneModal"
+        class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
+        @click="showPhoneModal = false"
+      >
+        <div
+          class="relative w-full max-w-md rounded-3xl bg-white p-8 shadow-2xl"
+          @click.stop
+        >
+          <button
+            @click="showPhoneModal = false"
+            class="absolute right-4 top-4 rounded-full p-2 text-slate-400 transition hover:bg-slate-100 hover:text-slate-900"
+            aria-label="Close modal"
+          >
+            <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" />
+            </svg>
+          </button>
+          <h3 class="text-2xl font-semibold text-slate-900">Select Country to Call</h3>
+          <p class="mt-2 text-sm text-slate-600">Choose a phone number based on your location</p>
+          <div class="mt-6 space-y-3">
+            <a
+              v-for="phone in phoneNumbers"
+              :key="phone.country"
+              :href="`tel:${phone.number}`"
+              class="flex items-center justify-between rounded-2xl border border-primary/20 bg-primary/5 p-4 transition hover:border-primary hover:bg-primary/10"
+              @click="showPhoneModal = false"
+            >
+              <div>
+                <p class="font-semibold text-slate-900">{{ phone.country }}</p>
+                <p class="mt-1 text-sm text-slate-600">{{ phone.number }}</p>
+              </div>
+              <svg viewBox="0 0 24 24" class="h-5 w-5 text-primary" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </transition>
   </div>
 </template>
 
 <script setup>
+import { ref } from 'vue';
 import ServiceCard from '@/components/ServiceCard.vue';
 import TestimonialsCarousel from '@/components/TestimonialsCarousel.vue';
 import services from '@/data/services.js';
 import testimonials from '@/data/testimonials.js';
 import doctorPortrait from '@/data/doctorImage.js';
+
+const showPhoneModal = ref(false);
+
+const phoneNumbers = [
+  { country: 'Turkey', number: '+90 212 222 33 44' },
+  { country: 'Azerbaijan', number: '+994 12 555 66 77' },
+  { country: 'Kosovo', number: '+383 38 123 456' },
+  { country: 'Georgia', number: '+995 32 234 567' },
+  { country: 'Bulgaria', number: '+359 2 345 678' },
+  { country: 'Uzbekistan', number: '+998 71 234 567' },
+];
 </script>
+
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>
 
