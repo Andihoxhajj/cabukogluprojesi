@@ -37,6 +37,10 @@
               <p class="text-xs uppercase tracking-widest text-primary/60">Bulgaria</p>
               <p class="mt-1 text-slate-100">License No: 567890</p>
             </li>
+            <li class="rounded-2xl bg-slate-800/50 p-3">
+              <p class="text-xs uppercase tracking-widest text-primary/60">Uzbekistan</p>
+              <p class="mt-1 text-slate-100">License No: 234567</p>
+            </li>
           </ul>
         </div>
       </div>
