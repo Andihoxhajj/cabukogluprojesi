@@ -2,7 +2,13 @@
   <div class="section-container space-y-12">
     <section class="grid gap-10 lg:grid-cols-[1.1fr,0.9fr] lg:items-center">
       <div class="order-2 overflow-hidden rounded-[40px] border border-primary/20 bg-white shadow-subtle lg:order-1">
-        <img :src="doctorPortrait" alt="Op. Dr. Cengiz Çabukoğlu" class="h-full w-full object-cover" />
+        <ImageCarousel
+          :images="projectPngImages"
+          :autoPlay="true"
+          :autoPlayInterval="1500"
+          :enableClickNavigation="true"
+          heightClass="aspect-square"
+        />
       </div>
       <div class="order-1 space-y-5 lg:order-2">
         <p class="text-sm font-semibold uppercase tracking-[0.4em] text-primary">Project</p>
@@ -36,6 +42,12 @@
 </template>
 
 <script setup>
-import doctorPortrait from '@/data/doctorImage.js';
+import ImageCarousel from '@/components/ImageCarousel.vue';
+import allProjectImages from '@/data/projectImages.js';
+
+// Only PNG images for this page (as requested)
+const projectPngImages = Array.isArray(allProjectImages)
+  ? allProjectImages.filter((src) => /\.(png)$/i.test(src))
+  : [];
 </script>
 

@@ -22,8 +22,14 @@
             </span>
           </div>
         </div>
-        <div class="relative h-72 flex-1 overflow-hidden rounded-3xl shadow-subtle">
-          <img :src="project.image" :alt="project.title" class="h-full w-full object-cover" loading="lazy" />
+        <div class="relative flex-1 overflow-hidden rounded-3xl shadow-subtle">
+          <ImageCarousel
+            :images="projectPngImages"
+            :autoPlay="true"
+            :autoPlayInterval="1500"
+            :enableClickNavigation="true"
+            heightClass="aspect-square"
+          />
         </div>
       </div>
 
@@ -81,9 +87,16 @@
 import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 import { findProjectById } from '@/data/projects.js';
+import ImageCarousel from '@/components/ImageCarousel.vue';
+import allProjectImages from '@/data/projectImages.js';
 
 const route = useRoute();
 
 const project = computed(() => findProjectById(route.params.id));
+
+// Only PNG images for detail page as requested
+const projectPngImages = Array.isArray(allProjectImages)
+  ? allProjectImages.filter((src) => /\.(png)$/i.test(src))
+  : [];
 </script>
 

@@ -42,9 +42,7 @@
           </div> -->
         </div>
         <div class="relative">
-          <div
-            class="relative overflow-hidden rounded-[40px] border border-primary/20 bg-white shadow-subtle"
-          >
+          <div class="relative overflow-hidden rounded-[40px] border border-primary/20 bg-white shadow-subtle">
             <img
               :src="doctorPortrait"
               alt="Op. Dr. Cengiz Çabukoğlu in clinic"
@@ -85,6 +83,8 @@
         <ServiceCard v-for="service in services" :key="service.id" :service="service" />
       </div>
     </section>
+
+    
 
     <section class="section-container grid gap-12 lg:grid-cols-[1.2fr,1fr] lg:items-center">
       <div class="space-y-5">
