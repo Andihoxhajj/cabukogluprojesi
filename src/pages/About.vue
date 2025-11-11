@@ -28,10 +28,10 @@
     </header>
 
     
-    <section class="grid gap-12 lg:grid-cols-2">
-      <div class="space-y-5">
+    <section class="grid gap-12 lg:grid-cols-2 lg:items-stretch">
+      <div class="flex flex-col space-y-5">
         <h2 class="text-2xl font-semibold text-slate-900">Field of Specialization & Professional Experience</h2>
-        <ul class="space-y-4 text-sm leading-relaxed text-slate-600">
+        <ul class="flex-1 space-y-4 text-sm leading-relaxed text-slate-600">
           <li
             v-for="item in experience"
             :key="`${item.role}-${item.organization}`"
@@ -43,9 +43,9 @@
           </li>
         </ul>
       </div>
-      <div class="space-y-5">
+      <div class="flex flex-col space-y-5">
         <h2 class="text-2xl font-semibold text-slate-900">Education</h2>
-        <ul class="space-y-4 text-sm leading-relaxed text-slate-600">
+        <ul class="flex-1 space-y-4 text-sm leading-relaxed text-slate-600">
           <li
             v-for="item in education"
             :key="`${item.level}-${item.institution}`"
