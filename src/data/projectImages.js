@@ -1,12 +1,9 @@
 // Import all images from assets/images except 1.png and doctor-portrait.svg and video files
-// Use alias-based glob (same approach as other data files) and include PNG/JPG
-const imageModules = import.meta.glob(
-  '@/assets/images/**/*.{png,PNG,jpg,jpeg,JPG,JPEG}',
-  {
-    eager: true,
-    import: 'default',
-  }
-);
+// Use relative glob from this file to include PNG/JPG assets
+const imageModules = import.meta.glob('../assets/images/**/*.{png,PNG,jpg,jpeg,JPG,JPEG}', {
+  eager: true,
+  import: 'default',
+});
 
 // Filter using the original file path (keys), then map to resolved URLs (module.default)
 const projectImages = Object.entries(imageModules)

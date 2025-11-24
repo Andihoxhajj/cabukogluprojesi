@@ -14,11 +14,25 @@ const getImages = (start, end, fallbackCount = 2) => {
 
 const patientCases = [
   {
+    id: 'cerebral-palsy',
+    title: 'Cerebral Palsy',
+    description: [
+      'Cerebral palsy is a condition commonly seen in both developed and developing countries, spanning the fields of pediatric orthopedics, neurology, and physical medicine and rehabilitation. Globally, an estimated 18 million children and adults are living with cerebral palsy, making it one of the most prevalent lifelong childhood-onset motor disorders.',
+      'When conservative methods are not sufficient, surgery may be recommended to improve alignment, enhance walking ability, and increase overall comfort—always tailored to the specific needs and functional goals of each child. In recent years, Single-Event Multilevel Surgery (SEMLS) has become a widely adopted and highly effective approach for children with cerebral palsy. By addressing multiple muscle, tendon, and bone deformities in a single surgical session, SEMLS allows for more efficient rehabilitation and provides significant long-term functional improvement.',
+      'When children receive proper evaluation and treatment from pediatric orthopedic specialists, many are able to meet their daily functional needs, maintain self-care, and achieve meaningful levels of independence. With accurate diagnosis, timely intervention, and coordinated multidisciplinary management, a substantial proportion of children with cerebral palsy can lead independent lives with minimal reliance on their families.',
+      'Through this project, our goal is to identify children with strong walking potential and the ability to develop self-care independence, and to make advanced pediatric orthopedic care accessible to them—regardless of financial circumstances. In parallel, we aim to provide pediatric orthopedic surgeons worldwide with practical training, hands-on experience, and exposure to modern treatment strategies in cerebral palsy management, contributing to a global improvement in care standards.',
+    ],
+    images: getImages(0, 3, 3),
+    video: null,
+  },
+  {
     id: 'tibial-hemimelia',
     title: 'Tibial Hemimelia',
     description: [
-      'Tibial hemimelia is a rare congenital condition characterized by partial or complete absence of the tibia, leading to significant deformity and functional impairment. Early diagnosis and proper referral are essential for optimizing a child\'s mobility and long-term quality of life. Thanks to modern reconstructive and limb-preservation techniques, many cases that previously required amputation can now be treated with functional limb reconstruction. Families should seek pediatric orthopedic evaluation promptly if they notice leg-length discrepancy, ankle instability, or foot deformity in their child.',
-      'With 30 years of professional experience in pediatric orthopedics and congenital deformities, I have successfully treated 113 patients with tibial hemimelia and am recognized as the developer of the \'Cabukoglu Reconstruction Procedure\'. This innovative technique represents a innovative advancement in the field, offering a limb-preserving alternative to amputation and establishing a new standard in the treatment of tibial hemimelia.'
+      'Tibial hemimelia is a rare congenital condition characterized by partial or complete absence of the tibia, resulting in significant limb deformity and functional limitations. Early diagnosis and timely referral to a specialized center are critical for optimizing mobility and ensuring the best possible long-term outcomes for affected children.',
+      'Advances in modern reconstructive surgery and limb-preservation techniques have transformed the treatment landscape. Many children who once faced inevitable amputation can now benefit from sophisticated, functional limb-reconstruction procedures. Families should seek prompt pediatric orthopedic evaluation if they notice leg-length discrepancy, ankle instability, or significant foot deformity in their child.',
+      'Despite these advancements, amputation continues to be the predominant treatment approach worldwide. Limb-salvage reconstructive procedures are performed in only a small number of highly specialized centers with the necessary expertise and infrastructure.',
+      'Through this initiative, our goal is to implement state-of-the-art limb-preserving surgical techniques for children with tibial hemimelia and to make these advanced treatments accessible to families regardless of financial circumstance. In parallel, we aim to develop a comprehensive educational framework to share, teach, and standardize these complex procedures globally.'
     ],
     images: getImages(0, 3, 3), // Use first 3 images as placeholder
     video: null, // Can be set to video URL if needed
@@ -27,10 +41,9 @@ const patientCases = [
     id: 'proximal-femoral-insufficiency',
     title: 'Proximal Femoral Insufficiency',
     description: [
-      'Proximal femoral insufficiency is a congenital disorder where the upper segment of the femur and hip joint fail to develop fully, leading to structural weakness and mechanical instability. This condition may cause significant leg-length discrepancy, limited hip motion, frequent limping, and challenges in maintaining balance during walking.',
-      'Although rare, it requires careful and early evaluation because the hip joint in these children can behave differently over time—some may remain flexible, while others may gradually lose stability or alignment. With modern pediatric orthopedic techniques, including guided growth, controlled lengthening, pelvic–femoral reconstruction, and advanced limb-preservation strategies, it is now possible to improve alignment, restore function, and support normal development far more effectively than in the past.',
-      'Parents should be attentive to early signs such as asymmetric skin folds, a noticeable shorter limb, difficulty keeping the hip aligned, or a persistent limp. Early specialist assessment ensures that treatment is tailored to the child\'s growth, helping them achieve the best possible mobility and long-term quality of life.',
-      'Through the surgeries I have performed on children from various countries around the world, these patients have regained their normal health, functional mobility, and have been able to continue their lives actively and independently.'
+      'Proximal femoral insufficiency is a congenital disorder in which the upper segment of the femur and the hip joint fail to develop fully, resulting in significant structural weakness and mechanical instability. Affected children may experience marked leg-length discrepancy, restricted hip motion, a persistent limp, and difficulty maintaining balance during walking.',
+      'Despite advances in reconstructive techniques, amputation remains the most common treatment strategy worldwide. Limb-salvage reconstructive procedures are performed only in a small number of highly specialized centers with the necessary expertise and infrastructure.',
+      'Through this initiative, our objective is to offer children with proximal femoral focal deficiency access to cutting-edge limb-preserving surgical methods—interventions that have the potential to restore alignment, improve mobility, and prevent lifelong disability. We are committed to providing these advanced treatments regardless of a family’s financial circumstances. In parallel, we aim to establish a comprehensive educational framework to disseminate, teach, and standardize these complex reconstructive techniques globally, ensuring that more children around the world can benefit from limb-preserving care.'
     ],
     images: getImages(3, 6, 2),
     video: null,
@@ -39,9 +52,9 @@ const patientCases = [
     id: 'fibular-hemimelia',
     title: 'Fibular Hemimelia',
     description: [
-      'Fibular hemimelia is a congenital condition in which the outer bone of the lower leg (the fibula) is partially or completely absent, leading to varying degrees of leg-length discrepancy, foot deformity, and ankle instability. Although rare, early recognition is crucial because timely and specialized orthopedic care can significantly improve a child\'s long-term mobility and functional outcomes.',
+      'Fibular hemimelia is a congenital condition in which the outer bone of the lower leg (the fibula) is partially or completely absent, leading to varying degrees of leg-length discrepancy, foot and ankle deformities, and knee instability.',
       'Thanks to advances in modern pediatric orthopedics—such as limb reconstruction, deformity correction, foot realignment procedures, and lengthening techniques—many children with fibular hemimelia can now achieve stable, well-aligned, and fully functional limbs, allowing them to participate actively in daily life.',
-      'With appropriate treatment and follow-up, children with fibular hemimelia can grow up to lead healthy, active, and independent lives. I currently have a new surgical technique that I developed myself, which has not yet been published in the literature and is now in the process of being prepared for publication.'
+      'Our aim is to provide free surgical care to children with these deformities who lack adequate financial resources, and to train pediatric orthopedic surgeons in these techniques—ultimately enabling these children to experience the quality of life and happiness they deserve.'
     ],
     images: getImages(6, 9, 2),
     video: null,
@@ -50,8 +63,11 @@ const patientCases = [
     id: 'congenital-orthopedic-deformities',
     title: 'Congenital Orthopedic Deformities',
     description: [
-      'Congenital deformities of the upper and lower extremities include a wide spectrum of conditions such as clubfoot, radial or tibial longitudinal deficiencies, limb length discrepancies, and Madelung deformity. These disorders may affect bone growth, joint alignment, and overall limb function.',
-      'Modern pediatric orthopedic care offers highly effective solutions, ranging from minimally invasive procedures and guided growth techniques to corrective osteotomies for conditions such as Madelung deformity or complex angular deformities. With early diagnosis and a personalized treatment plan, most children can achieve excellent long-term function and alignment.'
+      'Congenital orthopedic deformities are structural abnormalities of the bones, joints, or limbs that are present at birth. These conditions can affect the arms, legs, spine, or overall musculoskeletal alignment.',
+      'Congenital upper limb deformities occur due to disruptions in limb development during early pregnancy and can range from mild cosmetic differences to severe functional limitations.',
+      'Common examples include radial longitudinal deficiency (radial club hand), ulnar longitudinal deficiency, syndactyly (webbed fingers), polydactyly (extra fingers), thumb hypoplasia or absence, Madelung deformity, and congenital constriction band syndrome.',
+      'Treatment strategies vary widely based on the type and severity of the deformity. With timely intervention and structured rehabilitation, many children achieve strong functional outcomes, improved hand use, and enhanced quality of life.',
+      'Our mission is to restore functional upper or lower limbs in children with congenital anomalies, enabling them to achieve independence in daily self-care. To fulfill this goal, we aim to reach families with limited financial resources, provide their children with comprehensive treatment, and offer advanced training to pediatric orthopedic surgeons who specialize in these complex conditions.'
     ],
     images: getImages(9, 12, 2),
     video: null,
