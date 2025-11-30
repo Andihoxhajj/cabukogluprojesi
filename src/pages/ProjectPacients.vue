@@ -56,9 +56,12 @@
                       v-if="caseItem.mediaItems[currentIndex]?.type === 'video'"
                       :src="getVideoSource(caseItem.mediaItems[currentIndex]) || caseItem.mediaItems[currentIndex]?.src"
                       controls
+                      muted
                       class="h-full w-full object-cover"
                       preload="metadata"
                       v-show="getVideoSource(caseItem.mediaItems[currentIndex]) || !caseItem.mediaItems[currentIndex]?.isLazy"
+                      @loadedmetadata="(e) => { e.target.muted = true; e.target.volume = 0; }"
+                      @volumechange="(e) => { e.target.muted = true; e.target.volume = 0; }"
                     />
                     <div
                       v-if="caseItem.mediaItems[currentIndex]?.isLazy && !getVideoSource(caseItem.mediaItems[currentIndex])"
@@ -120,9 +123,12 @@
             <video
               :src="caseItem.video"
               controls
+              muted
               class="h-[500px] md:h-[600px] lg:h-[700px] w-full object-cover"
               :poster="caseItem.images?.[0]"
               preload="metadata"
+              @loadedmetadata="(e) => { e.target.muted = true; e.target.volume = 0; }"
+              @volumechange="(e) => { e.target.muted = true; e.target.volume = 0; }"
             />
           </div>
           <div v-else class="overflow-hidden rounded-2xl border border-primary/20">
