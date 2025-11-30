@@ -14,5 +14,6 @@ export default defineConfig({
     port: 5173,
     open: true,
   },
+  assetsInclude: ['**/*.mp4', '**/*.MP4', '**/*.mov', '**/*.MOV', '**/*.avi', '**/*.AVI', '**/*.mkv', '**/*.MKV'],
 });
 

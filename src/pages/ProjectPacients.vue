@@ -54,12 +54,18 @@
                   >
                     <video
                       v-if="caseItem.mediaItems[currentIndex]?.type === 'video'"
-                      :src="caseItem.mediaItems[currentIndex]?.src"
+                      :src="getVideoSource(caseItem.mediaItems[currentIndex]) || caseItem.mediaItems[currentIndex]?.src"
                       controls
                       class="h-full w-full object-cover"
+                      preload="metadata"
+                      v-show="getVideoSource(caseItem.mediaItems[currentIndex]) || !caseItem.mediaItems[currentIndex]?.isLazy"
+                    />
+                    <div
+                      v-if="caseItem.mediaItems[currentIndex]?.isLazy && !getVideoSource(caseItem.mediaItems[currentIndex])"
+                      class="flex h-full w-full items-center justify-center bg-slate-200 text-slate-500"
                     >
-                      Your browser does not support the video tag.
-                    </video>
+                      Loading video...
+                    </div>
                     <img
                       v-else
                       :src="caseItem.mediaItems[currentIndex]?.src"
@@ -116,9 +122,8 @@
               controls
               class="h-[500px] md:h-[600px] lg:h-[700px] w-full object-cover"
               :poster="caseItem.images?.[0]"
-            >
-              Your browser does not support the video tag.
-            </video>
+              preload="metadata"
+            />
           </div>
           <div v-else class="overflow-hidden rounded-2xl border border-primary/20">
             <ImageCarousel
@@ -136,18 +141,50 @@
 </template>
 
 <script setup>
-import { reactive } from 'vue';
+import { reactive, ref, onMounted } from 'vue';
 import ImageCarousel from '@/components/ImageCarousel.vue';
 import rawPatientCases from '@/data/patientCases.js';
+
+// Store resolved video URLs for lazy imports
+const resolvedVideos = reactive({});
+
+const resolveLazyVideo = async (importFn, key) => {
+  if (resolvedVideos[key]) {
+    return resolvedVideos[key];
+  }
+  try {
+    const module = await importFn();
+    const url = module.default || module;
+    resolvedVideos[key] = url;
+    return url;
+  } catch (error) {
+    console.error('Failed to load lazy video:', error);
+    return null;
+  }
+};
 
 const buildMediaItems = (caseItem) => {
   const items = [];
   if (Array.isArray(caseItem.media) && caseItem.media.length) {
-    caseItem.media.forEach((src) => {
-      items.push({
-        type: /\.(mp4|mov)$/i.test(src) ? 'video' : 'image',
-        src,
-      });
+    caseItem.media.forEach((srcOrFn, idx) => {
+      // Handle lazy import functions (for videos)
+      if (typeof srcOrFn === 'function') {
+        // Lazy import function - will be resolved when needed
+        const key = `${caseItem.id}-media-${idx}`;
+        items.push({
+          type: 'video',
+          src: null, // Will be resolved
+          lazyImport: srcOrFn,
+          key,
+          isLazy: true,
+        });
+      } else if (typeof srcOrFn === 'string') {
+        // String URL (images or direct video URLs)
+        items.push({
+          type: /\.(mp4|mov|avi|mkv)$/i.test(srcOrFn) ? 'video' : 'image',
+          src: srcOrFn,
+        });
+      }
     });
     return items;
   }
@@ -193,9 +230,50 @@ const handleMediaNav = (caseId, length, direction) => {
 const selectMediaIndex = (caseId, index) => {
   mediaIndices[caseId] = index;
 };
+
+// Get resolved video source
+const getVideoSrc = async (mediaItem) => {
+  if (!mediaItem.isLazy || !mediaItem.lazyImport) {
+    return mediaItem.src;
+  }
+  return await resolveLazyVideo(mediaItem.lazyImport, mediaItem.key);
+};
+
+// Reactive video sources
+const videoSources = reactive({});
+const getVideoSource = (mediaItem) => {
+  if (!mediaItem.isLazy) {
+    return mediaItem.src;
+  }
+  const key = mediaItem.key;
+  if (!videoSources[key]) {
+    resolveLazyVideo(mediaItem.lazyImport, key).then((url) => {
+      if (url) {
+        videoSources[key] = url;
+      }
+    });
+    return null;
+  }
+  return videoSources[key];
+};
 </script>
 
 <style scoped>
+video {
+  display: block;
+}
+
+/* Hide any text content or tooltips */
+video::before,
+video::after {
+  display: none !important;
+  content: none !important;
+}
+
+/* Ensure no filename text appears below video */
+.overflow-hidden video + * {
+  display: none;
+}
 </style>
 
 

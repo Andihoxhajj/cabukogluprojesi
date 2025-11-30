@@ -3,33 +3,74 @@
 
 import allProjectImages from '@/data/projectImages.js';
 
+// Import videos for nerve paralysis case
+import nerveParalysisVideo1 from '../assets/images/Nerve paralysis due to birth trauma1.mp4?url';
+import nerveParalysisVideo2 from '../assets/images/Nerve paralysis due to birth trauma2.mp4?url';
+
+// Import videos for cerebral palsy case
+import cerebralPalsyVideo1 from '../assets/images/Cerebral Palsy Orthopedic Care1.mp4?url';
+import cerebralPalsyVideo2 from '../assets/images/Cerebral Palsy Orthopedic Care2.mp4?url';
+import cerebralPalsyVideo3 from '../assets/images/Cerebral Palsy Orthopedic Care3.mp4?url';
+
+// Import videos for tibial hemimelia case
+import tibialHemimeliaVideo9 from '../assets/images/Tibial Hemimelia9.mp4?url';
+
+// Import videos for tibial hemimelia case 2
+import tibialHemilaVideo20 from '../assets/images/Tibial Hemila20.mp4?url';
+import tibialHemilaVideo21 from '../assets/images/Tibial Hemila21.mp4?url';
+
+// Import videos for proximal femoral focal deficiency case
+import proximalFemoralVideo5 from '../assets/images/Proximal femoral focal deficiency5.mp4?url';
+import proximalFemoralVideo6 from '../assets/images/Proximal femoral focal deficiency6.mp4?url';
+
+// Import videos for fibular hemimelia case
+import fibularHemimeliaVideo10 from '../assets/images/Fibular hemimelia10.mp4?url';
+
+// Import videos for congenital orthopedic deformities case 2
+import congenitalDeformitiesVideo7 from '../assets/images/Congenital Orthopedic Deformities7.MP4?url';
+import congenitalDeformitiesVideo8 from '../assets/images/Congenital Orthopedic Deformities8.MP4?url';
+
 // Get available images for placeholders
 const availableImages = Array.isArray(allProjectImages) ? allProjectImages : [];
 
-// Load media (images + videos) directly for named assets
-const mediaModules = import.meta.glob('../assets/images/**/*.{png,PNG,jpg,jpeg,JPG,JPEG,webp,WEBP,mp4,MP4,mov,MOV}', {
+// Load images eagerly (videos are handled separately)
+const imageModules = import.meta.glob('../assets/images/**/*.{png,PNG,jpg,jpeg,JPG,JPEG,webp,WEBP}', {
   eager: true,
   import: 'default',
 });
+
+// Videos should be added manually to avoid Vite parsing errors
+// To add a video to a case, set the 'video' property to the filename
+// Example: video: '/src/assets/images/Congenital Orthopedic Deformities7.MP4'
+// Or import them manually at the top of the file if needed
+
 
 const getMediaByPrefix = (prefix) => {
   const lowerPrefix = prefix.toLowerCase();
   const sources = [];
 
-  Object.entries(mediaModules).forEach(([path, resource]) => {
+  // Add images
+  Object.entries(imageModules).forEach(([path, resource]) => {
     if (!path.toLowerCase().includes(lowerPrefix)) return;
     sources.push(resource);
   });
 
+  // Videos are handled separately using static imports to avoid parsing errors
+  // They will be added manually or via a different mechanism
+
   return sources;
 };
+
+// Videos will be added manually to cases if needed
+// They should be referenced using static paths like: '/src/assets/images/filename.mp4'
 
 // Get media matching prefix with number range (e.g., "tibial hemila" with numbers 10-19)
 const getMediaByPrefixAndRange = (prefix, startNum, endNum) => {
   const lowerPrefix = prefix.toLowerCase();
   const sources = [];
 
-  Object.entries(mediaModules).forEach(([path, resource]) => {
+  // Add images
+  Object.entries(imageModules).forEach(([path, resource]) => {
     const lowerPath = path.toLowerCase();
     if (!lowerPath.includes(lowerPrefix)) return;
     
@@ -38,20 +79,24 @@ const getMediaByPrefixAndRange = (prefix, startNum, endNum) => {
     if (match) {
       const num = parseInt(match[1], 10);
       if (num >= startNum && num <= endNum) {
-        sources.push(resource);
+        sources.push({ type: 'image', path, resource, num });
       }
     }
   });
 
-  // Sort by filename to maintain order
-  return sources.sort((a, b) => {
-    const aMatch = String(a).match(/(\d+)/);
-    const bMatch = String(b).match(/(\d+)/);
-    if (aMatch && bMatch) {
-      return parseInt(aMatch[1], 10) - parseInt(bMatch[1], 10);
+  // Videos are handled separately to avoid Vite parsing errors
+  // They can be added manually or via static imports if needed
+
+  // Sort by number to maintain order
+  sources.sort((a, b) => {
+    if (a.num !== undefined && b.num !== undefined) {
+      return a.num - b.num;
     }
-    return 0;
+    return a.path.localeCompare(b.path);
   });
+
+  // Return resources (images as URLs, videos as lazy import functions)
+  return sources.map(item => item.resource);
 };
 
 // Helper function to get images with fallback
@@ -60,10 +105,10 @@ const getImages = (start, end, fallbackCount = 2) => {
   return sliced.length > 0 ? sliced : availableImages.slice(0, Math.min(fallbackCount, availableImages.length));
 };
 
-const proximalFemoralMedia = getMediaByPrefix('proximal femoral focal deficiency');
+const proximalFemoralMedia = getMediaByPrefixAndRange('proximal femoral focal deficiency', 3, 4);
 const tibialHemimeliaMedia = getMediaByPrefix('tibial hemimelia');
-const tibialHemimeliaCase2Media = getMediaByPrefixAndRange('tibial hemila', 10, 19);
-const fibularHemimeliaMedia = getMediaByPrefixAndRange('fibular hemimelia', 1, 11);
+const tibialHemimeliaCase2Media = getMediaByPrefixAndRange('tibial hemila', 10, 21);
+const fibularHemimeliaMedia = getMediaByPrefixAndRange('fibular hemimelia', 1, 9);
 const congenitalDeformitiesMedia = getMediaByPrefixAndRange('congenital orthopedic deformities', 1, 7);
 const congenitalDeformitiesCase2Media = getMediaByPrefixAndRange('congenital orthopedic deformities', 7, 8);
 const cerebralPalsyMedia = getMediaByPrefixAndRange('cerebral palsy orthopedic care', 1, 3);
@@ -79,7 +124,12 @@ const patientCases = [
       'When children receive proper evaluation and treatment from pediatric orthopedic specialists, many are able to meet their daily functional needs, maintain self-care, and achieve meaningful levels of independence. With accurate diagnosis, timely intervention, and coordinated multidisciplinary management, a substantial proportion of children with cerebral palsy can lead independent lives with minimal reliance on their families.',
       'Through this project, our goal is to identify children with strong walking potential and the ability to develop self-care independence, and to make advanced pediatric orthopedic care accessible to them—regardless of financial circumstances. In parallel, we aim to provide pediatric orthopedic surgeons worldwide with practical training, hands-on experience, and exposure to modern treatment strategies in cerebral palsy management, contributing to a global improvement in care standards.',
     ],
-    media: cerebralPalsyMedia.length ? cerebralPalsyMedia : undefined,
+    media: [
+      ...(cerebralPalsyMedia.length ? cerebralPalsyMedia : []),
+      cerebralPalsyVideo1,
+      cerebralPalsyVideo2,
+      cerebralPalsyVideo3,
+    ],
     images: !cerebralPalsyMedia.length ? getImages(0, 3, 3) : undefined,
     video: null,
   },
@@ -92,7 +142,10 @@ const patientCases = [
       'Despite these advancements, amputation continues to be the predominant treatment approach worldwide. Limb-salvage reconstructive procedures are performed in only a small number of highly specialized centers with the necessary expertise and infrastructure.',
       'Through this initiative, our goal is to implement state-of-the-art limb-preserving surgical techniques for children with tibial hemimelia and to make these advanced treatments accessible to families regardless of financial circumstance. In parallel, we aim to develop a comprehensive educational framework to share, teach, and standardize these complex procedures globally.'
     ],
-    media: tibialHemimeliaMedia.length ? tibialHemimeliaMedia : undefined,
+    media: [
+      ...(tibialHemimeliaMedia.length ? tibialHemimeliaMedia : []),
+      tibialHemimeliaVideo9,
+    ],
     images: !tibialHemimeliaMedia.length ? getImages(0, 3, 3) : undefined, // Fallback placeholders
     video: undefined,
   },
@@ -104,7 +157,11 @@ const patientCases = [
       'As in other cases, the goal is to maximise limb function, preserve alignment and stability, and prevent lifelong disability through advanced reconstructive techniques.',
       'The images and videos here are placeholders for now and can later be replaced with dedicated media files specific to this patient.'
     ],
-    media: tibialHemimeliaCase2Media.length ? tibialHemimeliaCase2Media : undefined,
+    media: [
+      ...(tibialHemimeliaCase2Media.length ? tibialHemimeliaCase2Media : []),
+      tibialHemilaVideo20,
+      tibialHemilaVideo21,
+    ],
     images: !tibialHemimeliaCase2Media.length ? getImages(0, 3, 3) : undefined,
     video: undefined,
   },
@@ -116,7 +173,11 @@ const patientCases = [
       'Despite advances in reconstructive techniques, amputation remains the most common treatment strategy worldwide. Limb-salvage reconstructive procedures are performed only in a small number of highly specialized centers with the necessary expertise and infrastructure.',
       'Through this initiative, our objective is to offer children with proximal femoral focal deficiency access to cutting-edge limb-preserving surgical methods—interventions that have the potential to restore alignment, improve mobility, and prevent lifelong disability. We are committed to providing these advanced treatments regardless of a family’s financial circumstances. In parallel, we aim to establish a comprehensive educational framework to disseminate, teach, and standardize these complex reconstructive techniques globally, ensuring that more children around the world can benefit from limb-preserving care.'
     ],
-    media: proximalFemoralMedia.length ? proximalFemoralMedia : undefined,
+    media: [
+      ...(proximalFemoralMedia.length ? proximalFemoralMedia : []),
+      proximalFemoralVideo5,
+      proximalFemoralVideo6,
+    ],
     images: !proximalFemoralMedia.length ? getImages(3, 6, 2) : undefined,
     video: undefined,
   },
@@ -128,7 +189,10 @@ const patientCases = [
       'Thanks to advances in modern pediatric orthopedics—such as limb reconstruction, deformity correction, foot realignment procedures, and lengthening techniques—many children with fibular hemimelia can now achieve stable, well-aligned, and fully functional limbs, allowing them to participate actively in daily life.',
       'Our aim is to provide free surgical care to children with these deformities who lack adequate financial resources, and to train pediatric orthopedic surgeons in these techniques—ultimately enabling these children to experience the quality of life and happiness they deserve.'
     ],
-    media: fibularHemimeliaMedia.length ? fibularHemimeliaMedia : undefined,
+    media: [
+      ...(fibularHemimeliaMedia.length ? fibularHemimeliaMedia : []),
+      fibularHemimeliaVideo10,
+    ],
     images: !fibularHemimeliaMedia.length ? getImages(6, 9, 2) : undefined,
     video: null,
   },
@@ -154,7 +218,11 @@ const patientCases = [
       'As with other cases, the focus remains on maximizing function, improving alignment, and enabling independence through advanced surgical techniques and comprehensive rehabilitation.',
       'The images and videos here are placeholders and can be replaced with dedicated media files specific to this patient case.'
     ],
-    media: congenitalDeformitiesCase2Media.length ? congenitalDeformitiesCase2Media : undefined,
+    media: [
+      ...(congenitalDeformitiesCase2Media.length ? congenitalDeformitiesCase2Media : []),
+      congenitalDeformitiesVideo7,
+      congenitalDeformitiesVideo8,
+    ],
     images: !congenitalDeformitiesCase2Media.length ? getImages(9, 12, 2) : undefined,
     video: null,
   },
@@ -165,7 +233,11 @@ const patientCases = [
       'Nerve paralysis due to birth trauma is a condition that can occur during delivery, affecting the peripheral nerves and potentially leading to functional limitations in affected limbs.',
       'Early diagnosis and appropriate intervention are crucial for optimizing recovery and functional outcomes. With proper evaluation and treatment, many children can achieve significant improvement in function and quality of life.'
     ],
-    media: nerveParalysisMedia.length ? nerveParalysisMedia : undefined,
+    media: [
+      ...(nerveParalysisMedia.length ? nerveParalysisMedia : []),
+      nerveParalysisVideo1,
+      nerveParalysisVideo2,
+    ],
     images: !nerveParalysisMedia.length ? getImages(0, 2, 2) : undefined,
     video: null,
   },

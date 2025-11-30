@@ -45,9 +45,7 @@
 import ImageCarousel from '@/components/ImageCarousel.vue';
 import allProjectImages from '@/data/projectImages.js';
 
-// Only PNG images for this page (as requested)
-const projectPngImages = Array.isArray(allProjectImages)
-  ? allProjectImages.filter((src) => /\.(png)$/i.test(src))
-  : [];
+// All images from the folder (excluding videos and specific excluded files)
+const projectPngImages = Array.isArray(allProjectImages) ? allProjectImages : [];
 </script>
 
