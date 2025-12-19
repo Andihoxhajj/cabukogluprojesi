@@ -14,131 +14,93 @@
         v-for="(caseItem, index) in patientCases"
         :key="caseItem.id"
         class="rounded-3xl bg-white p-6 shadow-subtle"
-        :class="{ 'lg:grid lg:grid-cols-2 lg:gap-10 lg:items-center': hasMedia(caseItem) }"
       >
-        <!-- Content Section -->
-        <div
-          class="space-y-6"
-          :class="{ 'lg:order-2': index % 2 === 0 && hasMedia(caseItem) }"
-        >
-          <div class="space-y-3">
-            <h2 class="text-2xl font-semibold text-slate-900">{{ caseItem.title }}</h2>
-            <div class="space-y-4">
-              <p
-                v-for="(paragraph, pIndex) in caseItem.description"
-                :key="pIndex"
-                class="text-base leading-relaxed text-slate-600"
-              >
-                {{ paragraph }}
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Media Section -->
-        <div
-          v-if="caseItem.mediaItems && caseItem.mediaItems.length"
-          class="mt-6 lg:mt-0"
-          :class="{ 'lg:order-1': index % 2 === 0 }"
-        >
-          <template
-            v-for="currentIndex in [getMediaIndex(caseItem.id, caseItem.mediaItems.length)]"
-            :key="`media-${caseItem.id}`"
+        <!-- Media grid (two cards for comparison) -->
+        <div v-if="caseItem.mediaItems && caseItem.mediaItems.length" class="grid gap-4 md:grid-cols-2">
+          <div
+            v-for="(cardIndex) in [0, 1]"
+            v-show="getMediaGroup(caseItem, cardIndex).length > 0"
+            :key="`card-${caseItem.id}-${cardIndex}`"
+            class="relative overflow-hidden rounded-2xl border border-primary/20 bg-slate-100"
           >
-            <div class="overflow-hidden rounded-2xl border border-primary/20 bg-slate-100">
-              <div class="relative h-[500px] md:h-[600px] lg:h-[700px]">
-                <transition name="carousel-fade" mode="out-in">
-                  <div
-                    :key="caseItem.mediaItems[currentIndex]?.src"
-                    class="absolute inset-0"
-                  >
-                    <video
-                      v-if="caseItem.mediaItems[currentIndex]?.type === 'video'"
-                      :src="getVideoSource(caseItem.mediaItems[currentIndex]) || caseItem.mediaItems[currentIndex]?.src"
-                      controls
-                      muted
-                      class="h-full w-full object-cover"
-                      preload="metadata"
-                      v-show="getVideoSource(caseItem.mediaItems[currentIndex]) || !caseItem.mediaItems[currentIndex]?.isLazy"
-                      @loadedmetadata="(e) => { e.target.muted = true; e.target.volume = 0; }"
-                      @volumechange="(e) => { e.target.muted = true; e.target.volume = 0; }"
-                    />
-                    <div
-                      v-if="caseItem.mediaItems[currentIndex]?.isLazy && !getVideoSource(caseItem.mediaItems[currentIndex])"
-                      class="flex h-full w-full items-center justify-center bg-slate-200 text-slate-500"
-                    >
-                      Loading video...
-                    </div>
-                    <img
-                      v-else
-                      :src="caseItem.mediaItems[currentIndex]?.src"
-                      class="h-full w-full object-cover"
-                      :alt="`${caseItem.title} media ${currentIndex + 1}`"
-                      loading="lazy"
-                    />
-                  </div>
-                </transition>
-
-                <button
-                  v-if="caseItem.mediaItems.length > 1"
-                  @click="handleMediaNav(caseItem.id, caseItem.mediaItems.length, -1)"
-                  class="absolute left-4 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-primary shadow-lg transition hover:bg-white"
-                  aria-label="Previous media"
+            <div class="relative h-[500px] md:h-[600px] lg:h-[700px]">
+              <template v-if="getCurrentMedia(caseItem.id, cardIndex, getMediaGroup(caseItem, cardIndex))">
+                <video
+                  v-if="getCurrentMedia(caseItem.id, cardIndex, getMediaGroup(caseItem, cardIndex))?.type === 'video'"
+                  :ref="(el) => setVideoRef(caseItem.id, cardIndex, el)"
+                  :src="getVideoSource(getCurrentMedia(caseItem.id, cardIndex, getMediaGroup(caseItem, cardIndex))) || getCurrentMedia(caseItem.id, cardIndex, getMediaGroup(caseItem, cardIndex))?.src"
+                  controls
+                  muted
+                  autoplay
+                  class="h-full w-full object-cover"
+                  preload="auto"
+                  v-show="getVideoSource(getCurrentMedia(caseItem.id, cardIndex, getMediaGroup(caseItem, cardIndex))) || !getCurrentMedia(caseItem.id, cardIndex, getMediaGroup(caseItem, cardIndex))?.isLazy"
+                  @loadeddata="(e) => { e.target.muted = true; e.target.volume = 0; e.target.play().catch(() => {}); }"
+                  @loadedmetadata="(e) => { e.target.muted = true; e.target.volume = 0; }"
+                  @volumechange="(e) => { e.target.muted = true; e.target.volume = 0; }"
+                />
+                <div
+                  v-else-if="getCurrentMedia(caseItem.id, cardIndex, getMediaGroup(caseItem, cardIndex))?.isLazy && !getVideoSource(getCurrentMedia(caseItem.id, cardIndex, getMediaGroup(caseItem, cardIndex)))"
+                  class="flex h-full w-full items-center justify-center bg-slate-200 text-slate-500"
                 >
-                  <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8">
-                    <path d="M15 18l-6-6 6-6" stroke-linecap="round" stroke-linejoin="round" />
-                  </svg>
-                </button>
+                  Loading video...
+                </div>
+                <img
+                  v-else
+                  :src="getCurrentMedia(caseItem.id, cardIndex, getMediaGroup(caseItem, cardIndex))?.src"
+                  class="h-full w-full object-cover"
+                  :alt="`${caseItem.title} media ${cardIndex + 1}`"
+                  loading="lazy"
+                />
+              </template>
+              
+              <!-- Navigation buttons on sides -->
+              <div v-if="getMediaGroup(caseItem, cardIndex).length > 1" class="absolute inset-y-0 left-0 flex items-center">
                 <button
-                  v-if="caseItem.mediaItems.length > 1"
-                  @click="handleMediaNav(caseItem.id, caseItem.mediaItems.length, 1)"
-                  class="absolute right-4 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-primary shadow-lg transition hover:bg-white"
-                  aria-label="Next media"
+                  @click="goToPrevious(caseItem.id, cardIndex, getMediaGroup(caseItem, cardIndex))"
+                  :disabled="!canGoPrevious(caseItem.id, cardIndex, getMediaGroup(caseItem, cardIndex))"
+                  class="ml-2 rounded-full bg-white/90 p-2 shadow-lg transition-all hover:bg-white disabled:opacity-50 disabled:cursor-not-allowed"
+                  aria-label="Previous"
                 >
-                  <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8">
-                    <path d="M9 18l6-6-6-6" stroke-linecap="round" stroke-linejoin="round" />
+                  <svg class="h-6 w-6 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
                   </svg>
                 </button>
               </div>
-              <div v-if="caseItem.mediaItems.length > 1" class="flex justify-center gap-2 px-4 pb-4 pt-3">
+              <div v-if="getMediaGroup(caseItem, cardIndex).length > 1" class="absolute inset-y-0 right-0 flex items-center">
                 <button
-                  v-for="(media, mediaIdx) in caseItem.mediaItems"
-                  :key="media.src"
-                  class="h-2 rounded-full transition-all"
-                  :class="mediaIdx === currentIndex ? 'w-8 bg-primary' : 'w-2 bg-slate-300'"
-                  @click="selectMediaIndex(caseItem.id, mediaIdx)"
-                  :aria-label="`Go to media ${mediaIdx + 1}`"
-                />
+                  @click="goToNext(caseItem.id, cardIndex, getMediaGroup(caseItem, cardIndex))"
+                  :disabled="!canGoNext(caseItem.id, cardIndex, getMediaGroup(caseItem, cardIndex))"
+                  class="mr-2 rounded-full bg-white/90 p-2 shadow-lg transition-all hover:bg-white disabled:opacity-50 disabled:cursor-not-allowed"
+                  aria-label="Next"
+                >
+                  <svg class="h-6 w-6 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
+              </div>
+              
+              <!-- Counter at bottom center -->
+              <div v-if="getMediaGroup(caseItem, cardIndex).length > 1" class="absolute inset-x-0 bottom-2 flex items-center justify-center">
+                <span class="rounded-full bg-white/90 px-3 py-1 text-xs font-medium text-slate-700 shadow-lg">
+                  {{ getCardMediaIndex(caseItem.id, cardIndex, getMediaGroup(caseItem, cardIndex)) + 1 }} / {{ getMediaGroup(caseItem, cardIndex).length }}
+                </span>
               </div>
             </div>
-          </template>
+          </div>
         </div>
 
-        <div
-          v-else-if="caseItem.video || (caseItem.images?.length > 0)"
-          class="mt-6 lg:mt-0"
-          :class="{ 'lg:order-1': index % 2 === 0 }"
-        >
-          <div v-if="caseItem.video" class="overflow-hidden rounded-2xl border border-primary/20 bg-slate-100">
-            <video
-              :src="caseItem.video"
-              controls
-              muted
-              class="h-[500px] md:h-[600px] lg:h-[700px] w-full object-cover"
-              :poster="caseItem.images?.[0]"
-              preload="metadata"
-              @loadedmetadata="(e) => { e.target.muted = true; e.target.volume = 0; }"
-              @volumechange="(e) => { e.target.muted = true; e.target.volume = 0; }"
-            />
-          </div>
-          <div v-else class="overflow-hidden rounded-2xl border border-primary/20">
-            <ImageCarousel
-              :images="caseItem.images"
-              :autoPlay="true"
-              :autoPlayInterval="3000"
-              :enableClickNavigation="true"
-              heightClass="h-[500px] md:h-[600px] lg:h-[700px]"
-            />
+        <!-- Text below media -->
+        <div class="space-y-3 mt-6">
+          <h2 class="text-2xl font-semibold text-slate-900">{{ caseItem.title }}</h2>
+          <div class="space-y-4">
+            <p
+              v-for="(paragraph, pIndex) in caseItem.description"
+              :key="pIndex"
+              class="text-base leading-relaxed text-slate-600"
+            >
+              {{ paragraph }}
+            </p>
           </div>
         </div>
       </article>
@@ -147,8 +109,7 @@
 </template>
 
 <script setup>
-import { reactive, ref, onMounted } from 'vue';
-import ImageCarousel from '@/components/ImageCarousel.vue';
+import { reactive, onMounted, nextTick } from 'vue';
 import rawPatientCases from '@/data/patientCases.js';
 
 // Store resolved video URLs for lazy imports
@@ -206,48 +167,139 @@ const buildMediaItems = (caseItem) => {
   return items;
 };
 
-const patientCases = rawPatientCases.map((caseItem) => ({
-  ...caseItem,
-  mediaItems: buildMediaItems(caseItem),
-}));
-
-const hasMedia = (caseItem) =>
-  (Array.isArray(caseItem.mediaItems) && caseItem.mediaItems.length > 0) ||
-  !!caseItem.video ||
-  (Array.isArray(caseItem.images) && caseItem.images.length > 0);
-
-const mediaIndices = reactive({});
-
-const getMediaIndex = (caseId, length) => {
-  if (!length) return 0;
-  if (typeof mediaIndices[caseId] === 'number' && mediaIndices[caseId] < length) {
-    return mediaIndices[caseId];
+// Split media items into two groups for two cards
+const splitMediaItems = (mediaItems) => {
+  if (!mediaItems || mediaItems.length === 0) {
+    return { firstHalf: [], secondHalf: [] };
   }
-  mediaIndices[caseId] = 0;
-  return 0;
+  const mid = Math.ceil(mediaItems.length / 2);
+  return {
+    firstHalf: mediaItems.slice(0, mid),
+    secondHalf: mediaItems.slice(mid),
+  };
 };
 
-const handleMediaNav = (caseId, length, direction) => {
-  if (!length) return;
-  const currentIndex = getMediaIndex(caseId, length);
-  mediaIndices[caseId] = (currentIndex + direction + length) % length;
-};
+const patientCases = rawPatientCases.map((caseItem) => {
+  const mediaItems = buildMediaItems(caseItem);
+  const { firstHalf, secondHalf } = splitMediaItems(mediaItems);
+  return {
+    ...caseItem,
+    mediaItems,
+    firstHalf,
+    secondHalf,
+  };
+});
 
-const selectMediaIndex = (caseId, index) => {
-  mediaIndices[caseId] = index;
-};
+// Track current media index for each card (caseId-cardIndex)
+const cardMediaIndices = reactive({});
 
-// Get resolved video source
-const getVideoSrc = async (mediaItem) => {
-  if (!mediaItem.isLazy || !mediaItem.lazyImport) {
-    return mediaItem.src;
+const getCardMediaKey = (caseId, cardIndex) => `${caseId}-card-${cardIndex}`;
+
+const getCardMediaIndex = (caseId, cardIndex, mediaGroup) => {
+  if (!mediaGroup || mediaGroup.length === 0) return 0;
+  const key = getCardMediaKey(caseId, cardIndex);
+  if (typeof cardMediaIndices[key] !== 'number') {
+    // Initialize: start at index 0 for each card
+    cardMediaIndices[key] = 0;
   }
-  return await resolveLazyVideo(mediaItem.lazyImport, mediaItem.key);
+  return cardMediaIndices[key];
+};
+
+const getCurrentMedia = (caseId, cardIndex, mediaGroup) => {
+  if (!mediaGroup || mediaGroup.length === 0) return null;
+  const index = getCardMediaIndex(caseId, cardIndex, mediaGroup);
+  return mediaGroup[index];
+};
+
+// Get media group for a specific card (first half or second half)
+const getMediaGroup = (caseItem, cardIndex) => {
+  if (cardIndex === 0) {
+    return caseItem.firstHalf || [];
+  } else {
+    return caseItem.secondHalf || [];
+  }
+};
+
+// Helper functions to check navigation state
+const canGoNext = (caseId, cardIndex, mediaGroup) => {
+  if (!mediaGroup || mediaGroup.length === 0) return false;
+  const currentIndex = getCardMediaIndex(caseId, cardIndex, mediaGroup);
+  return currentIndex < mediaGroup.length - 1;
+};
+
+const canGoPrevious = (caseId, cardIndex, mediaGroup) => {
+  if (!mediaGroup || mediaGroup.length === 0) return false;
+  const currentIndex = getCardMediaIndex(caseId, cardIndex, mediaGroup);
+  return currentIndex > 0;
+};
+
+// Manual navigation functions
+const goToNext = async (caseId, cardIndex, mediaGroup) => {
+  if (!canGoNext(caseId, cardIndex, mediaGroup)) return;
+  const key = getCardMediaKey(caseId, cardIndex);
+  const currentIndex = getCardMediaIndex(caseId, cardIndex, mediaGroup);
+  cardMediaIndices[key] = currentIndex + 1;
+  await playMedia(caseId, cardIndex, mediaGroup, currentIndex + 1);
+};
+
+const goToPrevious = async (caseId, cardIndex, mediaGroup) => {
+  if (!canGoPrevious(caseId, cardIndex, mediaGroup)) return;
+  const key = getCardMediaKey(caseId, cardIndex);
+  const currentIndex = getCardMediaIndex(caseId, cardIndex, mediaGroup);
+  cardMediaIndices[key] = currentIndex - 1;
+  await playMedia(caseId, cardIndex, mediaGroup, currentIndex - 1);
+};
+
+// Play media at specific index
+const playMedia = async (caseId, cardIndex, mediaGroup, index) => {
+  if (index < 0 || index >= mediaGroup.length) return;
+  
+  const key = getCardMediaKey(caseId, cardIndex);
+  const media = mediaGroup[index];
+  
+  // Wait for Vue to update DOM
+  await nextTick();
+  await new Promise(resolve => setTimeout(resolve, 200));
+  
+  if (media?.type === 'video') {
+    const videoRef = videoRefs[key];
+    if (videoRef) {
+      // If video source is lazy-loaded, wait for it
+      if (media.isLazy && !getVideoSource(media)) {
+        // Wait for video source to load
+        const checkVideo = setInterval(() => {
+          const src = getVideoSource(media);
+          if (src && videoRef.src === src) {
+            clearInterval(checkVideo);
+            videoRef.muted = true;
+            videoRef.volume = 0;
+            videoRef.play().catch(() => {});
+          }
+        }, 100);
+        setTimeout(() => clearInterval(checkVideo), 5000);
+      } else if (videoRef.src) {
+        videoRef.muted = true;
+        videoRef.volume = 0;
+        videoRef.play().catch(() => {});
+      }
+    }
+  }
+};
+
+// Store video element refs
+const videoRefs = reactive({});
+
+const setVideoRef = (caseId, cardIndex, el) => {
+  if (el) {
+    const key = getCardMediaKey(caseId, cardIndex);
+    videoRefs[key] = el;
+  }
 };
 
 // Reactive video sources
 const videoSources = reactive({});
 const getVideoSource = (mediaItem) => {
+  if (!mediaItem) return null;
   if (!mediaItem.isLazy) {
     return mediaItem.src;
   }
@@ -256,12 +308,43 @@ const getVideoSource = (mediaItem) => {
     resolveLazyVideo(mediaItem.lazyImport, key).then((url) => {
       if (url) {
         videoSources[key] = url;
+        // Auto-play video once it's loaded
+        const videoRef = Object.values(videoRefs).find(v => v && v.src === url);
+        if (videoRef) {
+          videoRef.muted = true;
+          videoRef.volume = 0;
+          videoRef.play().catch(() => {});
+        }
       }
     });
     return null;
   }
   return videoSources[key];
 };
+
+// Initialize and auto-play videos on mount (first item only)
+onMounted(() => {
+  // Wait for media to load, then auto-play videos if they're the first item
+  setTimeout(() => {
+    patientCases.forEach((caseItem) => {
+      [0, 1].forEach((cardIndex) => {
+        const mediaGroup = getMediaGroup(caseItem, cardIndex);
+        if (mediaGroup.length > 0) {
+          const media = getCurrentMedia(caseItem.id, cardIndex, mediaGroup);
+          if (media?.type === 'video') {
+            const key = getCardMediaKey(caseItem.id, cardIndex);
+            const videoRef = videoRefs[key];
+            if (videoRef && videoRef.src) {
+              videoRef.muted = true;
+              videoRef.volume = 0;
+              videoRef.play().catch(() => {});
+            }
+          }
+        }
+      });
+    });
+  }, 500);
+});
 </script>
 
 <style scoped>

@@ -18,13 +18,13 @@
       >
         <transition name="carousel-fade" mode="out-in">
           <div :key="images[currentIndex]" class="absolute inset-0">
-            <img
+          <img
               :src="images[currentIndex]"
               :alt="`Project image ${currentIndex + 1}`"
-              class="h-full w-full object-cover"
-              loading="lazy"
-            />
-          </div>
+            class="h-full w-full object-cover"
+            loading="lazy"
+          />
+        </div>
         </transition>
       </div>
 
