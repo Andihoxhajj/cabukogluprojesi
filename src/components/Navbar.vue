@@ -7,7 +7,7 @@
         <img
           :src="logo"
           alt="Logo"
-          class="h-14 w-14 object-contain"
+          class="h-16 w-16 object-contain"
         />
         <div class="leading-tight">
           <p class="text-sm font-semibold uppercase tracking-[0.3em] text-primary">Orthopedics</p>
@@ -85,7 +85,7 @@
 <script setup>
 import { computed, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
-import logo from '@/assets/images/logoo.svg';
+import logo from '@/assets/images/logo1.png';
 
 const navigation = [
   { label: 'Home', to: '/' },

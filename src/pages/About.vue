@@ -97,9 +97,11 @@
             Advanced Courses & Training
             <span class="text-primary transition group-open:rotate-45">+</span>
           </summary>
-          <ul class="mt-4 space-y-3 text-sm leading-relaxed text-slate-600">
-            <li v-for="item in courses" :key="item">{{ item }}</li>
-          </ul>
+          <div class="mt-4 space-y-4 text-sm leading-relaxed text-slate-600">
+            <div v-for="item in courses" :key="item" class="rounded-2xl bg-primary/5 p-4">
+              <p class="text-sm text-slate-600">{{ item }}</p>
+            </div>
+          </div>
         </details>
 
         <details class="group rounded-2xl border border-primary/20 bg-white p-6 shadow-subtle">
@@ -107,12 +109,12 @@
             International Publications
             <span class="text-primary transition group-open:rotate-45">+</span>
           </summary>
-          <ol class="mt-4 space-y-3 list-decimal pl-6 text-sm leading-relaxed text-slate-600">
-            <li v-for="item in publicationsInternational" :key="item.title">
+          <div class="mt-4 space-y-4 text-sm leading-relaxed text-slate-600">
+            <div v-for="item in publicationsInternational" :key="item.title" class="rounded-2xl bg-primary/5 p-4">
               <p class="font-semibold text-slate-900">{{ item.title }}</p>
-              <p class="text-sm text-slate-600">{{ item.citation }}</p>
-            </li>
-          </ol>
+              <p class="mt-2 text-sm text-slate-600">{{ item.citation }}</p>
+            </div>
+          </div>
         </details>
 
         <details class="group rounded-2xl border border-primary/20 bg-white p-6 shadow-subtle">
@@ -120,9 +122,11 @@
             National Publications
             <span class="text-primary transition group-open:rotate-45">+</span>
           </summary>
-          <ol class="mt-4 space-y-3 list-decimal pl-6 text-sm leading-relaxed text-slate-600">
-            <li v-for="item in publicationsNational" :key="item">{{ item }}</li>
-          </ol>
+          <div class="mt-4 space-y-4 text-sm leading-relaxed text-slate-600">
+            <div v-for="item in publicationsNational" :key="item" class="rounded-2xl bg-primary/5 p-4">
+              <p class="text-sm text-slate-600">{{ item }}</p>
+            </div>
+          </div>
         </details>
 
         <details class="group rounded-2xl border border-primary/20 bg-white p-6 shadow-subtle">
@@ -130,9 +134,11 @@
             International Conference Presentations
             <span class="text-primary transition group-open:rotate-45">+</span>
           </summary>
-          <ol class="mt-4 space-y-3 list-decimal pl-6 text-sm leading-relaxed text-slate-600">
-            <li v-for="item in conferenceInternational" :key="item">{{ item }}</li>
-          </ol>
+          <div class="mt-4 space-y-4 text-sm leading-relaxed text-slate-600">
+            <div v-for="item in conferenceInternational" :key="item" class="rounded-2xl bg-primary/5 p-4">
+              <p class="text-sm text-slate-600">{{ item }}</p>
+            </div>
+          </div>
         </details>
 
         <details class="group rounded-2xl border border-primary/20 bg-white p-6 shadow-subtle">
@@ -140,9 +146,11 @@
             National Conference Presentations
             <span class="text-primary transition group-open:rotate-45">+</span>
           </summary>
-          <ol class="mt-4 space-y-3 list-decimal pl-6 text-sm leading-relaxed text-slate-600">
-            <li v-for="item in conferenceNational" :key="item">{{ item }}</li>
-          </ol>
+          <div class="mt-4 space-y-4 text-sm leading-relaxed text-slate-600">
+            <div v-for="item in conferenceNational" :key="item" class="rounded-2xl bg-primary/5 p-4">
+              <p class="text-sm text-slate-600">{{ item }}</p>
+            </div>
+          </div>
         </details>
 
         <details class="group rounded-2xl border border-primary/20 bg-white p-6 shadow-subtle">
@@ -150,9 +158,11 @@
             Book Contributions
             <span class="text-primary transition group-open:rotate-45">+</span>
           </summary>
-          <ul class="mt-4 space-y-3 text-sm leading-relaxed text-slate-600">
-            <li v-for="item in books" :key="item">{{ item }}</li>
-          </ul>
+          <div class="mt-4 space-y-4 text-sm leading-relaxed text-slate-600">
+            <div v-for="item in books" :key="item" class="rounded-2xl bg-primary/5 p-4">
+              <p class="text-sm text-slate-600">{{ item }}</p>
+            </div>
+          </div>
         </details>
       </div>
     </section>

@@ -19,27 +19,27 @@
           <ul class="mt-4 grid gap-3 text-sm text-slate-300 sm:grid-cols-2 lg:grid-cols-3">
             <li class="rounded-2xl bg-slate-800/50 p-3">
               <p class="text-xs uppercase tracking-widest text-primary/60">Turkey</p>
-              <p class="mt-1 text-slate-100">License No: 123456</p>
+              <p class="mt-1 text-slate-100">+90 5333297115</p>
             </li>
             <li class="rounded-2xl bg-slate-800/50 p-3">
               <p class="text-xs uppercase tracking-widest text-primary/60">Azerbaijan</p>
-              <p class="mt-1 text-slate-100">License No: 789012</p>
-            </li>
-            <li class="rounded-2xl bg-slate-800/50 p-3">
-              <p class="text-xs uppercase tracking-widest text-primary/60">Kosovo</p>
-              <p class="mt-1 text-slate-100">License No: 345678</p>
-            </li>
-            <li class="rounded-2xl bg-slate-800/50 p-3">
-              <p class="text-xs uppercase tracking-widest text-primary/60">Georgia</p>
-              <p class="mt-1 text-slate-100">License No: 901234</p>
-            </li>
-            <li class="rounded-2xl bg-slate-800/50 p-3">
-              <p class="text-xs uppercase tracking-widest text-primary/60">Bulgaria</p>
-              <p class="mt-1 text-slate-100">License No: 567890</p>
+              <p class="mt-1 text-slate-100">+994508225533</p>
             </li>
             <li class="rounded-2xl bg-slate-800/50 p-3">
               <p class="text-xs uppercase tracking-widest text-primary/60">Uzbekistan</p>
-              <p class="mt-1 text-slate-100">License No: 234567</p>
+              <p class="mt-1 text-slate-100">+905313651212</p>
+            </li>
+            <li class="rounded-2xl bg-slate-800/50 p-3">
+              <p class="text-xs uppercase tracking-widest text-primary/60">Kosova</p>
+              <p class="mt-1 text-slate-100">+38348111492</p>
+            </li>
+            <li class="rounded-2xl bg-slate-800/50 p-3">
+              <p class="text-xs uppercase tracking-widest text-primary/60">Bulgaria</p>
+              <p class="mt-1 text-slate-100">+359879977402</p>
+            </li>
+            <li class="rounded-2xl bg-slate-800/50 p-3">
+              <p class="text-xs uppercase tracking-widest text-primary/60">Romania</p>
+              <p class="mt-1 text-slate-100">+40760087209</p>
             </li>
           </ul>
         </div>

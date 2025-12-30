@@ -235,12 +235,12 @@ import doctorPortrait from '@/data/doctorImage.js';
 const showPhoneModal = ref(false);
 
 const phoneNumbers = [
-  { country: 'Turkey', number: '+90 212 222 33 44' },
-  { country: 'Azerbaijan', number: '+994 12 555 66 77' },
-  { country: 'Kosovo', number: '+383 38 123 456' },
-  { country: 'Georgia', number: '+995 32 234 567' },
-  { country: 'Bulgaria', number: '+359 2 345 678' },
-  { country: 'Uzbekistan', number: '+998 71 234 567' },
+  { country: 'Turkey', number: '+90 5333297115' },
+  { country: 'Azerbaijan', number: '+994508225533' },
+  { country: 'Uzbekistan', number: '+905313651212' },
+  { country: 'Kosova', number: '+38348111492' },
+  { country: 'Bulgaria', number: '+359879977402' },
+  { country: 'Romania', number: '+40760087209' },
 ];
 </script>
 
